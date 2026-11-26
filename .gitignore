@@ -1,0 +1,15 @@
+# Credenciais
+.env
+
+# Ambiente virtual
+venv/
+Venv/
+env/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+
+# Editores / IDEs
+.vscode/
+.idea/
