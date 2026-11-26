@@ -1,0 +1,55 @@
+name: "Relatório de Bug"
+description: "Informe um erro, comportamento incorreto ou falha em um endpoint da API."
+labels: ["tipo:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por ajudar a manter a API Multimeios V2 estável!
+        Antes de abrir, verifique se o erro já não foi relatado anteriormente.
+
+  - type: dropdown
+    id: endpoint_afetado
+    attributes:
+      label: "Módulo / Recurso Afetado"
+      options:
+        - "Livros (/livros, /livros/post, /livros/alugados)"
+        - "Alunos (/criar_aluno, /alunos)"
+        - "Empréstimos (/alunos/.../alugar, /renovar, /devolver, /historico)"
+        - "Autenticação (/login)"
+        - "Core / Geral (/, /total)"
+    validations:
+      required: true
+
+  - type: input
+    id: rota_exata
+    attributes:
+      label: "Rota e Método HTTP"
+      placeholder: "Ex: POST /alunos/<aluno_id>/alugar/<numero_registro>"
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamento_observado
+    attributes:
+      label: "Comportamento Observado"
+      description: "O que aconteceu? Inclua o código de status HTTP retornado e a resposta JSON de erro."
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamento_esperado
+    attributes:
+      label: "Comportamento Esperado"
+      description: "O que deveria ter acontecido de acordo com a documentação do README.md."
+    validations:
+      required: true
+
+  - type: textarea
+    id: como_reproduzir
+    attributes:
+      label: "Passos para Reproduzir"
+      description: "Exemplo de payload JSON enviado, parâmetros de query ou headers utilizados."
+      placeholder: "1. Enviar requisição POST para /...\n2. Com o body: {...}\n3. Receber erro 500"
+    validations:
+      required: true
