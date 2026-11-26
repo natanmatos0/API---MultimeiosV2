@@ -1,0 +1,32 @@
+name: "Sugestão de Funcionalidade ou Melhoria"
+description: "Propor um novo endpoint, parâmetro de busca ou melhoria de regra de negócio."
+labels: ["tipo:feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use este formulário para propor novas funcionalidades para o acervo ou empréstimos da biblioteca.
+
+  - type: input
+    id: titulo_sugestao
+    attributes:
+      label: "Título da Sugestão"
+      placeholder: "Ex: Adicionar filtro por gênero na rota /livros"
+    validations:
+      required: true
+
+  - type: textarea
+    id: descricao_proposta
+    attributes:
+      label: "Descrição da Necessidade"
+      description: "Qual problema essa nova funcionalidade resolve ou qual caso de uso ela atende?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solucao_proposta
+    attributes:
+      label: "Solução Proposta / Endpoint Desejado"
+      description: "Como a rota, payload ou resposta devem ser estruturados?"
+    validations:
+      required: false
