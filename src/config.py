@@ -27,6 +27,23 @@ class Config:
         logger.warning("Falha ao analisar LISTA_USUARIOS do .env: %s. Utilizando lista vazia.", str(e))
         LISTA_USUARIOS = []
 
+    # Monitoramento de desempenho, rastreamento de rotas e captura de erros (Sentry)
+    SENTRY_DSN: str = os.getenv("SENTRY_DSN", "").strip()
+    SENTRY_ENVIRONMENT: str = os.getenv("SENTRY_ENVIRONMENT", os.getenv("FLASK_ENV", "production")).strip()
+    try:
+        SENTRY_TRACES_SAMPLE_RATE: float = float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "1.0"))
+    except (ValueError, TypeError):
+        SENTRY_TRACES_SAMPLE_RATE = 1.0
+
+    try:
+        SENTRY_PROFILE_SESSION_SAMPLE_RATE: float = float(
+            os.getenv("SENTRY_PROFILE_SESSION_SAMPLE_RATE", os.getenv("SENTRY_PROFILES_SAMPLE_RATE", "1.0"))
+        )
+    except (ValueError, TypeError):
+        SENTRY_PROFILE_SESSION_SAMPLE_RATE = 1.0
+
+    SENTRY_PROFILE_LIFECYCLE: str = os.getenv("SENTRY_PROFILE_LIFECYCLE", "trace").strip()
+
     @classmethod
     def validar(cls) -> None:
         """Validação fail-fast das variáveis de ambiente essenciais."""

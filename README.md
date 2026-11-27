@@ -184,3 +184,34 @@ Todas as requisições que enviam corpo devem utilizar o cabeçalho:
 | `PORT` | Não | Porta do servidor web (padrão: 5000) | `5000` |
 | `ALLOWED_ORIGINS` | Não | Origens autorizadas para CORS (separadas por vírgula) | `*` ou `https://meuapp.com` |
 | `LISTA_USUARIOS` | Não | JSON com lista de credenciais de login | `[{"user":"admin","pass":"secret"}]` |
+| `SENTRY_DSN` | Não | DSN do projeto no Sentry para monitoramento e tracing | `https://xxx@xxx.ingest.sentry.io/xxx` |
+| `SENTRY_ENVIRONMENT` | Não | Identificador do ambiente (default: production ou development) | `production` |
+| `SENTRY_TRACES_SAMPLE_RATE` | Não | Amostragem de transações para performance/rotas (default: 1.0 = 100%) | `1.0` |
+| `SENTRY_PROFILES_SAMPLE_RATE` | Não | Amostragem de profiling de código (default: 1.0) | `1.0` |
+
+---
+
+## 4. Monitoramento e Análise de Rotas Mais Usadas com Sentry
+
+A aplicação está integrada com o **Sentry** utilizando `sentry-sdk[flask]` configurado com suporte a **Performance Monitoring & Tracing** nativo.
+
+### 4.1. Como Ativar
+1. Crie uma conta ou acesse [sentry.io](https://sentry.io).
+2. Crie um projeto do tipo **Python / Flask**.
+3. Copie a **DSN** fornecida nas configurações do projeto (`Settings > Client Keys (DSN)`).
+4. No arquivo `.env` (ou nas variáveis de ambiente da sua plataforma de hospedagem, como Render ou Railway), adicione:
+   ```env
+   SENTRY_DSN=https://sua_chave@o000000.ingest.sentry.io/0000000
+   SENTRY_ENVIRONMENT=production
+   SENTRY_TRACES_SAMPLE_RATE=1.0
+   ```
+
+### 4.2. Como Analisar as Rotas Mais Acessadas
+Com o `traces_sample_rate=1.0`, cada requisição HTTP recebida pela API cria uma transação no Sentry identificada pelo nome da rota (ex: `src.routes.livros.listar_livros` ou `GET /livros`):
+1. No painel do Sentry, acesse o menu **Performance** ou **Insights -> HTTP Requests**.
+2. Na tabela de **Transactions**, ordene pela coluna **Transaction Count** (ou **Throughput / Volume de Transações**).
+3. Isso listará imediatamente as rotas da API em ordem decrescente de utilização, permitindo identificar:
+   - Quais rotas recebem a maior quantidade de requisições.
+   - O tempo de resposta médio, p50 e p95 de cada endpoint.
+   - A taxa de falhas e erros específicos por rota.
+
