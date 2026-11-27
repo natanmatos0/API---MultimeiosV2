@@ -16,6 +16,13 @@ def health_check():
         "mensagem": "Serviço operacional e conectado."
     }), 200
 
+@core_bp.route("/sentry-debug", methods=["GET"])
+def sentry_debug():
+    """Endpoint de teste para verificar envio de erros e transações ao Sentry."""
+    logger.info("Disparando erro de teste para validação no Sentry.")
+    divisao_por_zero = 1 / 0
+    return jsonify({"resultado": divisao_por_zero})
+
 @core_bp.route("/total", methods=["GET"])
 def total_livros():
     """Retorna listagem de livros da biblioteca em formato estritamente JSON."""
